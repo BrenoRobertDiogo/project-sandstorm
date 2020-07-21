@@ -4,35 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Link</title>
-
-        <style type="text/css">
-         body{
-                background-color: #f0f2f4;
-                font: 1.2em "Times New Roman", Times, serif;
-                color: #4382f9;
-                width: 900px;
-                }
-            .borda{
-                background-color: whitesmoke;
-                padding: 5px;
-                border: 10px none #ffffff ;
-                box-shadow: 1px 1px 1px 1px black;
-                border-radius: 10px;
-                }
-            .negrito{
-                font-weight: bolder;
-                }
-            .centralizar{
-                text-align: center;
-                }
-            #menu{
-                padding: 10px;
-                background-color: honeydew;
-                color: #4382f9;
-                text-align: center;
-            }
-        
-        </style>
+        {% block css %}
+        <link rel="stylesheet" type="text/css" href="./css/bordas.css">
+        {% endblock %}
 
     </head>
     
@@ -45,10 +19,6 @@
                 <p><strong>Senha:</strong>{{senha}}</p>
             
         </div><br><br>
-        <div id="menu" class="borda">
-            <a href="http://127.0.0.1:5000/index" >Criar Link |</a>
-            <a href="http://127.0.0.1:5000/index"> Ver contas</a>
-        </div>
         <h1>Instituições</h1>
         {% for x in range(numero_instituicoes) %}
             <div class="borda">
