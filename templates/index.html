@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Cantos arredondados</title>
+    {% block css %}
+    <link rel="stylesheet" href="templates/style.css">
+    <title>{% block title %}Algumas informações{% endblock %}</title>
+    {% endblock %}
 </head>
 <body>
     <header>
