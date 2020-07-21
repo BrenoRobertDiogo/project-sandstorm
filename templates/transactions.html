@@ -5,8 +5,8 @@
 		<title> Belvo - Transasações</title>
 		
 		{% block css %}
-        	<link rel="stylesheet" type="text/css" href="./templates/css/header.css" />
-        	
+			<link rel="stylesheet" type="text/css" href="./templates/css/header.css" />
+			<link rel="stylesheet" type="text/css" href="./templates/css/bordas.css" />
         {% endblock %}
 
 	</head>
@@ -22,8 +22,32 @@
 	            <a href="#" class="links">bancos</a>
 	        </div>
 
-    	</header>
-
+		</header>
+		<h1 class="centralizar">Login Belvo</h1>
+        
+        <div class="borda">
+            
+                <p> <strong>Id:</strong>{{id}}</p>
+                <p><strong>Senha:</strong>{{senha}}</p>
+            
+        </div><br><br>
+	
+		<h1>Transasações</h1>
+		{% if transacoes != [] %}
+			{% for x in range(numero_transacoes) %}
+				<div class="borda">
+						<p class="negrito"> Banco da Transação >> {{transacoes[x]["account"]['institution']['name'']}}</p>
+						<p class="negrito"> Tipo de Transação >> {{transacoes[x]["account"]['type']}}</p>
+						<p class="negrito"> Saldo >> {{transacoes[x]["account"]['balance']['current']}}</p>
+						<p class="negrito"> Saldo Disponivel >> {{transacoes[x]["account"]['balance']['available']}}</p>
+						<p class="negrito"> Montante da Transação >> {{transacoes[x]["account"]['amount']}}</p>
+						<p class="negrito"> Descrição da Transação >> {{transacoes[x]["account"]['description']}}</p>
+				</div><br><br>
+			{% endfor %}
+		
+		{% else %}
+            <div class="borda"><h1 class="centralizar">Nenhuma Transação Encontrada</h1></div>
+        {% endif %}
 
 
 
