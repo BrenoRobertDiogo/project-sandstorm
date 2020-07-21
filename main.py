@@ -20,5 +20,26 @@ def login():
 
 """@app.route('/dados', methods=['POST', 'GET'])
 def dados():"""
+
+@app.route("/transacoes",methods=["POST"])
+
+def transacoes():
+    login = request.form.to_dict()
+    
+    nome = login["id"]
+    senha = login["pass"]
+    
+    client = Client(f"{nome}", 
+f"{senha}", 
+"https://sandbox.belvo.co")
+    transacoes = []
+
+    [transacoes.append(x) for x in client.transactions.list()]
+
+    return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+
 if __name__=='__main__':
     app.run(debug=True)
+
+
+
