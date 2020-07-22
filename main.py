@@ -4,6 +4,8 @@ from pprint import pprint
 from belvo.client import Client
 import json
 import random
+import jsonify
+import json
 
 app = Flask(__name__, static_folder='templates')
 
@@ -23,20 +25,26 @@ def dados():
     if request.method=='GET':
         return render_template('index.html')
     else:
-        resp = make_response(render_template('login.html'))
-        nome = request.form['idPessoa']
-        senha = request.form['senha']
-        client = bibliotecas.chamar(nome, senha)
-        contas = bibliotecas.retornaContas(client)
-        tamanho = len(contas)
+        ###Pegando os dados do formulário
+        nome = request.form['idPessoa']           #id
+        senha = request.form['senha']             #senha
+        client = bibliotecas.chamar(nome, senha)  #Cazendo o client
+        contas = bibliotecas.retornaContas(client)#Contas que tem la
+        tamanho = len(contas)                     #Quantas contas tem
         
-        resp.set_cookie('idPessoa', contas)
-        resp.set_cookie('senhaPessoa', nome)
-        return render_template('index.html', nome=contas, tamanho=tamanho)#bibliotecas.retornaContas(client)#render_template('index.html')
+        ###Fazendo os cookies
+        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanho))#Site a ser retornado
+        resp.set_cookie('idPessoa', json.dumps(nome))#id
+        resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
 
+        return resp
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
-    return f"{request.cookies.get('idPessoa'), {request.cookies.get('client')}}"
+    cookie1 = request.cookies.get('idPessoa')
+    cookie2 = request.cookies.get('senhaPessoa')
+    return f"{cookie1}, {cookie2}"
+
+
 """@app.route('/dados', methods=['POST', 'GET'])
 def dados():"""
 
@@ -68,9 +76,12 @@ def transacoes():
     nome = login["idPessoa"]
     senha = login["senha"]
     
-    client = bibliotecas.chamar(nome,senha)
-    
-    transacoes = bibliotecas.transacoes(client)
+    client = Client(f"{nome}", 
+f"{senha}", 
+"https://sandbox.belvo.co")
+    transacoes = []
+
+    [transacoes.append(x) for x in client.Transactions.list()]
 
     return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
 
