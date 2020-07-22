@@ -33,6 +33,8 @@ def dados():
         nome = request.form['idPessoa']           #id
         senha = request.form['senha']             #senha
         client = bibliotecas.chamar(nome, senha)  #Cazendo o client
+        x = [x for x in str(client)]
+        return x
         contas = bibliotecas.retornaContas(client)#Contas que tem la
         tamanho = len(contas)                     #Quantas contas tem
         
@@ -40,7 +42,7 @@ def dados():
         resp = make_response(render_template('index.html', nome=contas, tamanho=tamanho))#Site a ser retornado
         resp.set_cookie('idPessoa', json.dumps(nome))#id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
-
+        resp.set_cookie('clientPessoa', json.dumps(client))
         return resp
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
