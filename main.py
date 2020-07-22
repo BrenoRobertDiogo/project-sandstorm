@@ -61,6 +61,7 @@ def link():
         return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
     numero_instituicoes = len(instituicoes),numero_links=len(link))
 
+@app.route("/",methods=["POST"])
 def transacoes():
     login = request.form.to_dict()
     
