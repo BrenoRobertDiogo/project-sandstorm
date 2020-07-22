@@ -18,7 +18,6 @@ def login():
     else:
         return msgError
 
-<<<<<<< HEAD
 @app.route('/dados', methods=['POST', 'GET'])
 def dados():
     if request.method=='GET':
@@ -38,7 +37,6 @@ def dados():
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
     return f"{request.cookies.get('idPessoa'), {request.cookies.get('client')}}"
-=======
 """@app.route('/dados', methods=['POST', 'GET'])
 def dados():"""
 
@@ -81,7 +79,6 @@ f"{senha}",
     [transacoes.append(x) for x in client.transactions.list()]
 
     return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
->>>>>>> e05848f21715faeab7ed8841d64576d870ed821a
 
 if __name__=='__main__':
     app.run(debug=True)
