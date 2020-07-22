@@ -4,11 +4,7 @@ from pprint import pprint
 from belvo.client import Client
 import json
 import random
-<<<<<<< HEAD
-import jsonify
-=======
 
->>>>>>> bd70cd1c1c6af16c95c49c4d46a4b22b4159a418
 
 app = Flask(__name__, static_folder='templates')
 
@@ -61,7 +57,7 @@ def link():
         
         
         nome = request.cookies.get('idPessoa')
-        senha = request.cookies.get('senha')
+        senha = request.cookies.get('senhaPessoa')
         
         client = bibliotecas.chamar(nome,senha)
 
@@ -74,7 +70,7 @@ def link():
         return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
     numero_instituicoes = len(instituicoes),numero_links=len(link))
 
-@app.route("/",methods=["POST", "GET"])
+@app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
     nome = request.cookies.get('idPessoa')
     senha = request.cookies.get('senhaPessoa')
@@ -83,7 +79,7 @@ def transacoes():
     senha = login["senhaPessoa"]
     client = transformers(request.cookies.get('idPessoa'), request.cookies.get('senhaPessoa'))
     transacoes = [transacao for transacao in client.Transactions.list()]
-    return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+    return render_template("transacoes.html",numero_transacoes = len(transacoes),transacoes = transacoes)
 
 
 @app.route('/contato')
