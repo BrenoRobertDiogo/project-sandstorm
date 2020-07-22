@@ -50,10 +50,10 @@ def rota():
     return f"{cookie1}, {cookie2}"
 
 
-@app.route("/link",methods=["POST"])
+@app.route("/link",methods=["POST", "GET"])
 
 def link():
-    if request.method == "POST":
+    if request.method == "GET":
         
         
         nome = request.cookies.get('idPessoa')
