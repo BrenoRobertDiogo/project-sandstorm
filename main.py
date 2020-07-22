@@ -59,7 +59,7 @@ def link():
         
         nome = request.cookies.get('idPessoa')
         senha = request.cookies.get('senhaPessoa')
-        return f'<h2>{nome}</h2>'
+        
         client = bibliotecas.chamar(nome,senha)
 
         instituicoes = bibliotecas.ver_instituicoes(client)
@@ -69,14 +69,14 @@ def link():
         return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
     numero_instituicoes = len(instituicoes),numero_links=len(link))
 
-@app.route("/",methods=["POST", "GET"])
+@app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
     nome = request.cookies.get('idPessoa')
     senha = request.cookies.get('senhaPessoa')
     
     client = transformers(nome, senha)
     transacoes = [transacao for transacao in client.Transactions.list()]
-    return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+    return render_template("transacoes.html",numero_transacoes = len(transacoes),transacoes = transacoes)
 
 
 @app.route('/contato')
