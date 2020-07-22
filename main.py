@@ -18,6 +18,7 @@ def login():
     else:
         return msgError
 
+<<<<<<< HEAD
 @app.route('/dados', methods=['POST', 'GET'])
 def dados():
     if request.method=='GET':
@@ -37,6 +38,53 @@ def dados():
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
     return f"{request.cookies.get('idPessoa'), {request.cookies.get('client')}}"
+=======
+"""@app.route('/dados', methods=['POST', 'GET'])
+def dados():"""
+
+
+@app.route("/link",methods=["POST"])
+
+def link():
+    if request.method == "POST":
+        login = request.form.to_dict()
+        
+        nome = login["id"]
+        senha = login["pass"]
+        
+        client = Client(f"{nome}", 
+        f"{senha}", 
+        "https://sandbox.belvo.co")
+
+        instituicoes = []
+
+        [instituicoes.append(x) for x in client.Institutions.list()]
+
+        link = []
+
+        [link.append(x) for x in client.Links.list()]
+        
+        return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
+    numero_instituicoes = len(instituicoes),numero_links=len(link))
+
+def transacoes():
+    login = request.form.to_dict()
+    
+    nome = login["id"]
+    senha = login["pass"]
+    
+    client = Client(f"{nome}", 
+f"{senha}", 
+"https://sandbox.belvo.co")
+    transacoes = []
+
+    [transacoes.append(x) for x in client.transactions.list()]
+
+    return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+>>>>>>> e05848f21715faeab7ed8841d64576d870ed821a
 
 if __name__=='__main__':
     app.run(debug=True)
+
+
+
