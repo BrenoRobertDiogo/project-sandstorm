@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Link</title>
+        {% block css %}
+        <link rel="stylesheet" href="templates/css/login.css">
+        {% endblock %}
+
+    </head>
+    
+    <body>
+        <h1 class="centralizar">Login Belvo</h1>
+        
+        <div class="borda">
+            <form action="http://127.0.0.1:5000/dados" method="POST">
+                <p> <strong>Id:</strong><input type="text" name="idPessoa" id="idPessoa"></p>
+                <p></p><strong>Senha:</strong><input type="password" name="senha" id="senha"></p>
+
+            <button type="submit">Enviar</button>
+             </form>
+        </div>
+
+    </body>
+
+</html>

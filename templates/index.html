@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block css %}
-    <link rel="stylesheet" href="templates/style.css">
+    <link rel="stylesheet" href="templates/css/styleInf.css">
     <title>{% block title %}Algumas informações{% endblock %}</title>
     {% endblock %}
 </head>
@@ -21,13 +21,13 @@
 
     </header>
     
-    {% for x in tamanho %}
+    {% for x in range(tamanho) %}
     
     <section>
         <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
         <p><strong>ID:</strong>             {{nome[x]['id']}}</p>
         
-        <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}, {{nome[x+1]['category']}}, {{nome[x+2]['category']}}</p>
+        <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
     </section><br>
     {% endfor %}
 

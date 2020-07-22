@@ -1,0 +1,84 @@
+body{
+    margin-bottom: 10px;
+    background-color: #f0f2f4e1;
+}
+
+header{
+    background: rgba(0, 0, 0, 0.781);
+	border-bottom: 1px solid #000000;
+	height: 45px;
+	position: fixed;
+	width: 100%;
+    top: 0;
+    left: 0;
+    padding: 0 0 4px 0;
+}
+.logo{
+    padding: 0px 0 0px 100px;
+    color: white;
+    float: left;
+    margin-bottom: 10px;
+}
+h2-config{
+    padding-top: 0px;
+    border-top: 0;
+}
+#vermelho{
+    color: red;
+}
+
+.texto{
+    padding: 45px 0 0 0;
+    font-size: 25px;
+}
+.links-cabecalho{
+    text-align: right;
+    padding: 10px 40px 0 0;
+    font-size: 20px;
+    float: right;
+    border-bottom: springgreen;
+}
+
+a{
+	text-decoration: none;
+    padding: 15px 10px;
+    
+}
+
+a:link{
+	color: white;
+}
+
+a:visited{
+	color: #ffffffe7;
+}
+
+a:hover{
+	background: #f0f2f4e1;
+	color: black;
+}
+
+a:active{
+	color: #535353;
+}
+
+
+section{
+    background: white;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 10px 10px 10px 20px;
+    width: 400px;
+    margin: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.603);
+    float: left;
+    margin-top: 60px;
+    margin-left: 60px;
+}
+.apagar{
+    text-align: center;
+}
+
+header.menu-principal{
+    text-align: center;
+}

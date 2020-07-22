@@ -5,13 +5,13 @@ import json
 def retornaContas(client):
 	return [x for x in client.Accounts.list()]
 
-def chamar(diretorio):
-	with open(diretorio, 'r') as arquivo:
-		mDados = json.load(arquivo)
+def chamar(nome, senha):
+	#with open(diretorio, 'r') as arquivo:
+	#	mDados = json.load(arquivo)
 
 	client = Client(
-		mDados['my-secret-key-id'], 
-		mDados['my-secret-key'], 
+		nome,#mDados['my-secret-key-id'], 
+		senha,#mDados['my-secret-key'], 
 		"https://sandbox.belvo.co"#"https://api.belvo.co"
 	)
 	return client
