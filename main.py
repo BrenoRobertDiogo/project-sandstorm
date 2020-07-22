@@ -4,8 +4,7 @@ from pprint import pprint
 from belvo.client import Client
 import json
 import random
-import jsonify
-import json
+
 
 app = Flask(__name__, static_folder='templates')
 
