@@ -85,7 +85,7 @@ f"{senha}",
 
 
 @app.route('/contato')
-def login():
+def contato():
     
     return render_template('contato.html')
     
