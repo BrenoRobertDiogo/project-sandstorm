@@ -55,29 +55,26 @@ def link():
     if request.method == "POST":
         login = request.form.to_dict()
         
-        nome = login["id"]
-        senha = login["pass"]
+        nome = login["idPessoa"]
+        senha = login["senha"]
         
-        client = Client(f"{nome}", 
-        f"{senha}", 
-        "https://sandbox.belvo.co")
+        client = bibliotecas.chamar(nome,senha)
 
-        instituicoes = []
+        instituicoes = bibliotecas.ver_instituicoes(client)
 
-        [instituicoes.append(x) for x in client.Institutions.list()]
+        link = bibliotecas.ver_link(client)
 
-        link = []
-
-        [link.append(x) for x in client.Links.list()]
+       
         
         return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
     numero_instituicoes = len(instituicoes),numero_links=len(link))
 
+@app.route("/",methods=["POST"])
 def transacoes():
     login = request.form.to_dict()
     
-    nome = login["id"]
-    senha = login["pass"]
+    nome = login["idPessoa"]
+    senha = login["senha"]
     
     client = Client(f"{nome}", 
 f"{senha}", 

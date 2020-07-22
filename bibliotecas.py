@@ -48,3 +48,15 @@ def criar(client):
 	links = [x for x in client.Links.list()]
 	x = client.Accounts.create(links[0]['id'])
 	return x
+
+def ver_link(client):
+	links = [x for x in client.Links.list()]
+	return links
+
+def ver_instituicoes(client):
+	instituicoes = [x for x in client.Institutions.list()]
+	return instituicoes 
+
+def transacoes(client):
+	transacoes= [x for x in client.Transactions.list()]
+	return transacoes
