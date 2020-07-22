@@ -5,7 +5,6 @@ from belvo.client import Client
 import json
 import random
 import jsonify
-import json
 
 app = Flask(__name__, static_folder='templates')
 
@@ -55,10 +54,10 @@ def rota():
 
 def link():
     if request.method == "POST":
-        login = request.form.to_dict()
         
-        nome = login["idPessoa"]
-        senha = login["senha"]
+        
+        nome = request.cookies.get('idPessoa')
+        senha = request.cookies.get('senha')
         
         client = bibliotecas.chamar(nome,senha)
 
@@ -73,13 +72,21 @@ def link():
 
 @app.route("/",methods=["POST", "GET"])
 def transacoes():
-    login = request.form.to_dict()
+    nome = request.cookies.get('idPessoa')
+    senha = request.cookies.get('senha')
     
     nome = login["idPessoa"]
     senha = login["senha"]
     client = transformers(request.cookies.get('idPessoa'), request.cookies.get('senhaPessoa'))
     transacoes = [transacao for transacao in client.Transactions.list()]
     return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+
+
+@app.route('/contato')
+def contato():
+    
+    return render_template('contato.html')
+    
 
 if __name__=='__main__':
     app.run(debug=True)
