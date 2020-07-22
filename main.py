@@ -53,10 +53,10 @@ def dados():"""
 
 def link():
     if request.method == "POST":
-        login = request.form.to_dict()
         
-        nome = login["idPessoa"]
-        senha = login["senha"]
+        
+        nome = request.cookies.get('idPessoa')
+        senha = request.cookies.get('senha')
         
         client = bibliotecas.chamar(nome,senha)
 
@@ -71,10 +71,9 @@ def link():
 
 @app.route("/",methods=["POST"])
 def transacoes():
-    login = request.form.to_dict()
+    nome = request.cookies.get('idPessoa')
+    senha = request.cookies.get('senha')
     
-    nome = login["idPessoa"]
-    senha = login["senha"]
     
     client = Client(f"{nome}", 
 f"{senha}", 
@@ -84,6 +83,13 @@ f"{senha}",
     [transacoes.append(x) for x in client.Transactions.list()]
 
     return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+
+
+@app.route('/contato')
+def login():
+    
+    return render_template('contato.html')
+    
 
 if __name__=='__main__':
     app.run(debug=True)
