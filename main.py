@@ -11,6 +11,12 @@ app = Flask(__name__, static_folder='templates')
 
 msgError = '<h1> Método ou site não encontrado <h1> <script>window.alert()</script>'
 
+def transformers(idPessoa, senhaPessoa):
+    return Client(
+		idPessoa,
+		senhaPessoa,
+		"https://sandbox.belvo.co"
+	)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -45,10 +51,6 @@ def rota():
     return f"{cookie1}, {cookie2}"
 
 
-"""@app.route('/dados', methods=['POST', 'GET'])
-def dados():"""
-
-
 @app.route("/link",methods=["POST"])
 
 def link():
@@ -69,20 +71,14 @@ def link():
         return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
     numero_instituicoes = len(instituicoes),numero_links=len(link))
 
-@app.route("/",methods=["POST"])
+@app.route("/",methods=["POST", "GET"])
 def transacoes():
     login = request.form.to_dict()
     
     nome = login["idPessoa"]
     senha = login["senha"]
-    
-    client = Client(f"{nome}", 
-f"{senha}", 
-"https://sandbox.belvo.co")
-    transacoes = []
-
-    [transacoes.append(x) for x in client.Transactions.list()]
-
+    client = transformers(request.cookies.get('idPessoa'), request.cookies.get('senhaPessoa'))
+    transacoes = [transacao for transacao in client.Transactions.list()]
     return render_template("transactions.html",numero_transacoes = len(transacoes),transacoes = transacoes)
 
 if __name__=='__main__':
