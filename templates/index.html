@@ -27,6 +27,12 @@
     {% for x in range(tamanho) %}
     
     <section>
+        {%for y in range(numero_instituicoes)%}
+            {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
+                <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
+            {% endif %}
+        {% endfor %}
+        
         <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
         <p><strong>ID:</strong>{{nome[x]['id']}}</p>
         
