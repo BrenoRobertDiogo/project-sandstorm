@@ -16,7 +16,6 @@ def transformers(idPessoa, senhaPessoa):
 		"https://sandbox.belvo.co"
 	)
 
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     resp = make_response(render_template('login.html'))
@@ -51,6 +50,7 @@ def dados():
         
         #CONTAS
         contas = bibliotecas.retornaContas(client)#Contas que tem la
+
         tamanhoContas = len(contas)               #Quantas contas tem
 
         ###Fazendo os cookies###
@@ -60,7 +60,6 @@ def dados():
                                             instituicoes = instituicoes,
                                             numero_instituicoes=tamanhoInst))#Site a ser retornado
         
-
         resp.set_cookie('idPessoa', json.dumps(nome))    #id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
         """#######################COOKIES###############"""
