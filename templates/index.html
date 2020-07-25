@@ -23,16 +23,28 @@
 
     </header>
     <div id="suasContas"><h1 >Suas contas: </h1></div>
-    
-    {% for x in range(tamanho) %}
-    
-    <section>
-        <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
-        <p><strong>ID:</strong>{{nome[x]['id']}}</p>
+    {% if conta != [] %}
+        {% for x in range(tamanho) %}
         
-        <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
-    </section><br>
-    {% endfor %}
+        <section>
+            {%for y in range(numero_instituicoes)%}
+                {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
+                    <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
+                {% endif %}
+            {% endfor %}
+            
+            <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
+            <p><strong>ID:</strong>{{nome[x]['id']}}</p>
+            
+            <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
+        </section><br>
+        {% endfor %}
+    {% else %}
+        <section>
+        <p> <h1> Nenhuma Conta Encontrada </h1> </p>
+        </section><br>
+    
+    {% endif %}
 
     <script type="text/javascript">{{comando}}</script>
 
