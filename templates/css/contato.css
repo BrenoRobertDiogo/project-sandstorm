@@ -1,0 +1,12 @@
+#link-contato a:link, #link-contato a:visited{
+    color: black;
+}
+
+#link-contato a:hover{
+    background: #b4afaf;
+    color: black;
+}
+
+#link-contato a:active{
+    color: #535353;
+}
