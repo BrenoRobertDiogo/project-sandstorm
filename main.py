@@ -69,11 +69,11 @@ def dados():
         
         [resp.set_cookie(f'tran{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
         
-        ##############VER LINK##########################
+        #######################VER LINK################
         
         [resp.set_cookie(f'verLink{x}', json.dumps(str(verLink[x]))) for x in range(tamanhoVerLink)]
         
-        ###############RETORNAR AS CONTAS###############
+        ###############RETORNAR AS CONTAS##############
         [resp.set_cookie(f'conta{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
         return resp
 
