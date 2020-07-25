@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Link</title>
-        {% block css %}
-        <link rel="stylesheet" href="templates/css/login.css">
-        {% endblock %}
-
-    </head>
+<head>
     
-    <body>
-        <h1 class="centralizar">Login Belvo</h1>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+        <link rel="stylesheet" href="templates/css/login.css">
         
-        <div class="borda">
-            <form action="http://127.0.0.1:5000/dados" method="POST">
-                <p> <strong>Id:</strong><input type="text" name="idPessoa" id="idPessoa"></p>
-                <p></p><strong>Senha:</strong><input type="password" name="senha" id="senha"></p>
+        <title> {% block title %} Login belvo {% endblock %} </title>
+    {% endblock %}
 
-            <button type="submit">Enviar</button>
-             </form>
-        </div>
+</head>
+<body>
+    <div id="container">
+        
+        <img src="templates/img/perfil.png">
+    
 
-    </body>
+        <form action="http://127.0.0.1:5000/dados" method="POST"> 
+            <div>
+                <input type="text" class="idPessoa" name="idPessoa" id="idPessoa" placeholder="Digite seu id">
 
+            </div>
+            
+            <div>
+                <input type="password" class="senha" name="senha" id="senha" placeholder="Digite sua senha">
+
+            </div>
+
+            <div>
+                <input type="submit" class="submit" value="logar">
+
+            </div>
+        </form>
+    </div>
+</body>
 </html>
+

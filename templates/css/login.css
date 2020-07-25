@@ -1,25 +1,59 @@
+
 body{
-    background-color: #f0f2f4;
-    font: 1.2em "Times New Roman", Times, serif;
-    color: #4382f9;
-    width: 900px;
-    }
-.borda{
-    background-color: whitesmoke;
-    padding: 5px;
-    border: 10px none #ffffff ;
-    box-shadow: 1px 1px 1px 1px black;
+    font-family: "Trebuchet", Helvetica, sans-serif;
+    background: #4F4F4F url('../img/fundo.jpg') no-repeat top center;
+}
+#container{
+    width: 400px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    }
-.negrito{
-    font-weight: bolder;
-    }
-.centralizar{
+    margin: 0 auto;
+    margin-top: 120px;
     text-align: center;
-    }
-#menu{
-    padding: 10px;
-    background-color: honeydew;
-    color: #4382f9;
-    text-align: center;
+
+}
+#container img{
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+    margin-bottom: 30px;
+}
+input{
+    height: 40px;
+    width: 80%;
+    font-size: 18px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding-left: 40px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    transition: all 1s;
+}
+
+input.idPessoa{
+    background-image: url("../img/icone-usuario.png");
+}
+
+input.senha{
+    background-image: url("../img/icone-cadeado.png");
+}
+
+input.submit{
+    color: black;
+    background-color: #FFA500;
+    border: 2px solid black;
+    padding: 5px 20px;
+    height: 45px;
+    transition-timing-function: linear;
+}
+
+input.submit:hover{
+    color: #696969;
+    background-color: #FF4500;
+    margin-bottom: 1px;
+    height: 50px;
+    width: 85%;
+    transition: all 1s;
 }
