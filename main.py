@@ -30,10 +30,15 @@ def dados():
     if request.method=='GET':
         return render_template('index.html')
     else:
+        
         ###Pegando os dados do formulário
         nome = request.form['idPessoa']           #id
         senha = request.form['senha']             #senha
         client = bibliotecas.chamar(nome, senha)  #Cazendo o client
+        
+
+        instituicoes = bibliotecas.ver_instituicoes(client)
+        tamanhoInst = len(instituicoes)
         #Contas que tem la
         contas = bibliotecas.retornaContas(client)
         tamanhoContas = len(contas)               #Quantas contas tem
@@ -41,7 +46,7 @@ def dados():
         ###Fazendo os cookies###
         valor = str(contas[0])
         #return valor
-        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanhoContas))#Site a ser retornado
+        resp = make_response(render_template('index.html', instituicoes = instituicoes,tamanho=tamanhoInst))#Site a ser retornado
         resp.set_cookie('idPessoa', json.dumps(nome))    #id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
 
