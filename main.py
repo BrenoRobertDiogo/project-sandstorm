@@ -1,9 +1,11 @@
 from flask import Flask, request, abort, redirect, url_for, render_template, make_response
+import flask
 import bibliotecas
 from pprint import pprint
 from belvo.client import Client
 import json
 import random
+import jsonify
 
 app = Flask(__name__, static_folder='templates')
 
@@ -37,7 +39,6 @@ def dados():
         instituicoes = bibliotecas.ver_instituicoes(client)
         tamanhoInst = len(instituicoes)
 
-
         ####DADOS PARA CRIAR OS COOKIES####
         
         #INSTITUIÇÕES
@@ -65,15 +66,21 @@ def dados():
         """#######################COOKIES###############"""
         
         ##############RETORNANDO INSTITUIÇÕES##########
-        
-        [resp.set_cookie(f'tran{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
+        [resp.set_cookie(f'isnt{x}', json.dumps(str(instituicoes[x]))) for x in range(tamanhoInst)]
+        resp.set_cookie('lenInst', json.dumps(tamanhoInst))
         
         #######################VER LINK################
-        
-        [resp.set_cookie(f'verLink{x}', json.dumps(str(verLink[x]))) for x in range(tamanhoVerLink)]
+        [resp.set_cookie(f'verLink{x}', json.dumps(verLink[x])) for x in range(tamanhoVerLink)]
+        resp.set_cookie('lenVerLink', json.dumps(tamanhoVerLink))
         
         ###############RETORNAR AS CONTAS##############
         [resp.set_cookie(f'conta{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
+        resp.set_cookie('lenConta', json.dumps(tamanhoContas))
+
+        ###############RETORNAR AS TRANSAÇÕES##########
+        [resp.set_cookie(f'trans{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
+        resp.set_cookie('lenTrans', json.dumps(tamanhoTran))
+
         return resp
 
 @app.route('/rota', methods=['POST', 'GET'])
@@ -81,29 +88,32 @@ def rota():
     cookie1 = request.cookies.get('idPessoa')
     cookie2 = request.cookies.get('senhaPessoa')
     
-    return f"{cookie1}, {cookie2}"
+    return f"{json.loads(cookie1)}, {json.loads(cookie2)}"
 
 
 @app.route("/link",methods=["POST", "GET"])
 def link():
     if request.method == "GET":
-
+        ####instituições e link e cadastro
+        ##Instituições
+        tamanhoInst = int(request.cookies.get(f'lenInst'))
+        instituicoes = [json.loads(request.cookies.get(f'isnt{instituicao}')) for instituicao in range(tamanhoInst)]#request.cookies.get('')
+        
+        ##Link
+        tamanhoVerLink = int(request.cookies.get('lenVerLink'))
+        links = [json.loads(request.cookies.get(f'verLink{link}')) for link in range(tamanhoVerLink)]
+        #return links[0]['id']
+        ##Cadastro informações
         nome = request.cookies.get('idPessoa')
         senha = request.cookies.get('senhaPessoa')
-        
-        client = bibliotecas.chamar(nome,senha)
 
-        instituicoes = bibliotecas.ver_instituicoes(client)
-
-        link = bibliotecas.ver_link(client)
-        
         return render_template("link.html",
             id=nome,
             senha=senha,
-            links = link,
+            links = links,
             instituicoes=instituicoes,
-            numero_instituicoes = len(instituicoes),
-            numero_links=len(link))
+            numero_instituicoes = tamanhoInst,
+            numero_links = tamanhoVerLink)
 
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
