@@ -39,11 +39,12 @@ def dados():
         contas = bibliotecas.retornaContas(client)#Contas que tem la
         tamanho = len(contas)                     #Quantas contas tem
         
+        instituicoes = bibliotecas.ver_instituicoes(client)#Lista As intituições e ira pegar a logo das mesmas.
         #return str(contas)
         ###Fazendo os cookies
         valor = str(contas[0])
         #return valor
-        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanho))#Site a ser retornado
+        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanho,instituicoes=instituicoes,numero_instituicoes=len(instituicoes)))#Site a ser retornado
         resp.set_cookie('idPessoa', json.dumps(nome))#id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
         resp.set_cookie('teste', json.dumps(valor))#json.dumps(contas[0]))
