@@ -41,7 +41,7 @@ def dados():
 
         ####DADOS PARA CRIAR OS COOKIES####
         
-        #INSTITUIÇÕES
+        #TRANSAÇÕES
         transacoes  = bibliotecas.transacoes(client)
         tamanhoTran = len(transacoes)
         
@@ -66,7 +66,7 @@ def dados():
         """#######################COOKIES###############"""
         
         ##############RETORNANDO INSTITUIÇÕES##########
-        [resp.set_cookie(f'isnt{x}', json.dumps(str(instituicoes[x]))) for x in range(tamanhoInst)]
+        [resp.set_cookie(f'isnt{x}', json.dumps(instituicoes[x])) for x in range(tamanhoInst)]
         resp.set_cookie('lenInst', json.dumps(tamanhoInst))
         
         #######################VER LINK################
@@ -74,7 +74,7 @@ def dados():
         resp.set_cookie('lenVerLink', json.dumps(tamanhoVerLink))
         
         ###############RETORNAR AS CONTAS##############
-        [resp.set_cookie(f'conta{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
+        [resp.set_cookie(f'conta{x}', json.dumps(contas[x])) for x in range(tamanhoContas)]
         resp.set_cookie('lenConta', json.dumps(tamanhoContas))
 
         ###############RETORNAR AS TRANSAÇÕES##########
@@ -104,6 +104,7 @@ def link():
         links = [json.loads(request.cookies.get(f'verLink{link}')) for link in range(tamanhoVerLink)]
         #return links[0]['id']
         ##Cadastro informações
+        #return instituicoes[0]
         nome = request.cookies.get('idPessoa')
         senha = request.cookies.get('senhaPessoa')
 

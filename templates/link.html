@@ -36,12 +36,13 @@
         <h1>Instituições</h1>
         {% for x in range(numero_instituicoes) %}
             <div class="borda">
+                    
                     <img src="{{instituicoes[x]["logo"]}}" alt="" width="300px" height="200px"> 
                     <p class="negrito">Instituição >> {{instituicoes[x]["name"]}}</p>
             
             </div><br><br>
         {% endfor %}
-        
+        <h1>{{instituicoes[1][1]}}</h1>
         <h1>Links</h1>
         {% if links != [] %}
             {% for x in range(numero_links) %}
