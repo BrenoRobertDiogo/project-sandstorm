@@ -12,12 +12,14 @@ header{
     top: 0;
     left: 0;
     padding: 0 0 4px 0;
+    transition: all 1s;
 }
 .logo{
     padding: 0px 0 0px 100px;
     color: white;
     float: left;
     margin-bottom: 10px;
+    transition: all 1s;
 }
 h2-config{
     padding-top: 0px;
@@ -37,11 +39,14 @@ h2-config{
     font-size: 20px;
     float: right;
     border-bottom: springgreen;
+
+    transition: all 1s;
 }
 
 a{
 	text-decoration: none;
     padding: 15px 10px;
+
     
 }
 
