@@ -34,22 +34,24 @@ def dados():
         nome = request.form['idPessoa']           #id
         senha = request.form['senha']             #senha
         client = bibliotecas.chamar(nome, senha)  #Cazendo o client
-        #x = [x for x in str(client)]
-        #return str(x)
-        contas = bibliotecas.retornaContas(client)#Contas que tem la
-        tamanho = len(contas)                     #Quantas contas tem
-        
-        instituicoes = bibliotecas.ver_instituicoes(client)#Lista As intituições e ira pegar a logo das mesmas.
-        #return str(contas)
-        ###Fazendo os cookies
+        #Contas que tem la
+        contas = bibliotecas.retornaContas(client)
+        tamanhoContas = len(contas)               #Quantas contas tem
+
+        ###Fazendo os cookies###
         valor = str(contas[0])
         #return valor
-        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanho,instituicoes=instituicoes,numero_instituicoes=len(instituicoes)))#Site a ser retornado
-        resp.set_cookie('idPessoa', json.dumps(nome))#id
+        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanhoContas))#Site a ser retornado
+        resp.set_cookie('idPessoa', json.dumps(nome))    #id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
-        resp.set_cookie('teste', json.dumps(valor))#json.dumps(contas[0]))
-        for x in range(tamanho):
-            resp.set_cookie(f'id{x}', json.dumps(str(contas[x])))
+
+        """#######################COOKIES###############"""
+        ##########RETORNANDO CONTAS COMO COOKIE######
+        [resp.set_cookie(f'id{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
+        ##############RETORNANDO TRANSAÇÕES##########
+        #[resp.set_cookie(f'tran{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
+
+
         cookie1 = request.cookies.get('idPessoa')
         cookie3 = request.cookies.get('teste')
         #resp.set_cookie('clientPessoa', json.dumps(client))
@@ -58,8 +60,7 @@ def dados():
 def rota():
     cookie1 = request.cookies.get('idPessoa')
     cookie2 = request.cookies.get('senhaPessoa')
-    cookie3 = request.cookies.get('teste')
-    return f"{cookie1}, {cookie2}, {cookie3}"
+    return f"{cookie1}, {cookie2}"
 
 
 @app.route("/link",methods=["POST", "GET"])
