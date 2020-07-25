@@ -23,22 +23,27 @@
 
     </header>
     <div id="suasContas"><h1 >Suas contas: </h1></div>
-    
-    {% for x in range(tamanho) %}
-    
-    <section>
-        {%for y in range(numero_instituicoes)%}
-            {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
-                <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
-            {% endif %}
+    {% if conta != [] %}
+        {% for x in range(tamanho) %}
+        
+        <section>
+            {%for y in range(numero_instituicoes)%}
+                {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
+                    <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
+                {% endif %}
+            {% endfor %}
+            
+            <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
+            <p><strong>ID:</strong>{{nome[x]['id']}}</p>
+            
+            <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
+        </section><br>
         {% endfor %}
+    {% else %}
         
-        <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
-        <p><strong>ID:</strong>{{nome[x]['id']}}</p>
-        
-        <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
-    </section><br>
-    {% endfor %}
+        <div class="borda"><h1 class="centralizar">Nenhuma Conta Encontrada</h1></div>
+    
+    {% endif %}
 
     <script type="text/javascript">{{comando}}</script>
 
