@@ -30,55 +30,65 @@ def dados():
     if request.method=='GET':
         return render_template('index.html')
     else:
-        
-        ###Pegando os dados do formulário
+        ###Pegando os dados do formulário###
         nome = request.form['idPessoa']           #id
         senha = request.form['senha']             #senha
         client = bibliotecas.chamar(nome, senha)  #Cazendo o client
-        
-
+        ###instituições###
         instituicoes = bibliotecas.ver_instituicoes(client)
         tamanhoInst = len(instituicoes)
-        #Contas que tem la
-        contas = bibliotecas.retornaContas(client)
+
+
+        ####DADOS PARA CRIAR OS COOKIES####
+        
+        #INSTITUIÇÕES
+        transacoes  = bibliotecas.transacoes(client)
+        tamanhoTran = len(transacoes)
+        
+        #LINK
+        verLink = bibliotecas.ver_link(client)
+        tamanhoVerLink = len(verLink)
+        
+        #CONTAS
+        contas = bibliotecas.retornaContas(client)#Contas que tem la
         tamanhoContas = len(contas)               #Quantas contas tem
 
-        instituicoes = bibliotecas.ver_instituicoes(client)
         ###Fazendo os cookies###
-        valor = str(contas[0])
-        #return valor
-<<<<<<< HEAD
-        resp = make_response(render_template('index.html', instituicoes = instituicoes,tamanho=tamanhoInst))#Site a ser retornado
-=======
-        resp = make_response(render_template('index.html', nome=contas, tamanho=tamanhoContas,instituicoes = instituicoes,numero_instituicoes=len(instituicoes) ))#Site a ser retornado
->>>>>>> bf4ebba3426f7cd964d5c7a45044124ad9464c3f
+        resp = make_response(render_template('index.html',
+                                            nome=contas,
+                                            tamanho=tamanhoContas,
+                                            instituicoes = instituicoes,
+                                            numero_instituicoes=tamanhoInst))#Site a ser retornado
+        
+
         resp.set_cookie('idPessoa', json.dumps(nome))    #id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
-
         """#######################COOKIES###############"""
-        ##########RETORNANDO CONTAS COMO COOKIE######
-        [resp.set_cookie(f'id{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
-        ##############RETORNANDO TRANSAÇÕES##########
-        #[resp.set_cookie(f'tran{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
-
-
-        cookie1 = request.cookies.get('idPessoa')
-        cookie3 = request.cookies.get('teste')
-        #resp.set_cookie('clientPessoa', json.dumps(client))
+        
+        ##############RETORNANDO INSTITUIÇÕES##########
+        
+        [resp.set_cookie(f'tran{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
+        
+        ##############VER LINK##########################
+        
+        [resp.set_cookie(f'verLink{x}', json.dumps(str(verLink[x]))) for x in range(tamanhoVerLink)]
+        
+        ###############RETORNAR AS CONTAS###############
+        [resp.set_cookie(f'conta{x}', json.dumps(str(contas[x]))) for x in range(tamanhoContas)]
         return resp
+
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
     cookie1 = request.cookies.get('idPessoa')
     cookie2 = request.cookies.get('senhaPessoa')
+    
     return f"{cookie1}, {cookie2}"
 
 
 @app.route("/link",methods=["POST", "GET"])
-
 def link():
     if request.method == "GET":
-        
-        
+
         nome = request.cookies.get('idPessoa')
         senha = request.cookies.get('senhaPessoa')
         
@@ -88,8 +98,13 @@ def link():
 
         link = bibliotecas.ver_link(client)
         
-        return render_template("link.html",id=nome,senha=senha,links = link,instituicoes=instituicoes,
-    numero_instituicoes = len(instituicoes),numero_links=len(link))
+        return render_template("link.html",
+            id=nome,
+            senha=senha,
+            links = link,
+            instituicoes=instituicoes,
+            numero_instituicoes = len(instituicoes),
+            numero_links=len(link))
 
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
@@ -98,7 +113,9 @@ def transacoes():
     
     client = transformers(nome, senha)
     transacoes = [transacao for transacao in client.Transactions.list()]
-    return render_template("transacoes.html",numero_transacoes = len(transacoes),transacoes = transacoes)
+    return render_template("transacoes.html",
+        numero_transacoes = len(transacoes),
+        transacoes = transacoes)
 
 
 @app.route('/contato')

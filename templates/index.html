@@ -23,15 +23,13 @@
 
     </header>
     <div id="suasContas"><h1 >Suas contas: </h1></div>
-<<<<<<< HEAD
+
     {% if nome != [] %}
-=======
-    {% if nome!= [] %}
->>>>>>> bf4ebba3426f7cd964d5c7a45044124ad9464c3f
+
         {% for x in range(tamanho) %}
         
         <section>
-            {%for y in range(numero_instituicoes)%}
+            {% for y in range(numero_instituicoes) %}
                 {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
                     <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
                 {% endif %}
