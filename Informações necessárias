@@ -1,0 +1,3 @@
+Para utilizar essa API é necessário criar uma conta na Belvo API.
+Os pacotes necessários para se usar essa API são: pprint, belvo, flask
+Eles podem ser instalados usando o comando pip install "NOME DO PACOTE"
