@@ -11,6 +11,7 @@ app = Flask(__name__, static_folder='templates')
 
 msgError = '<h1> Método ou site não encontrado <h1> <script>window.alert()</script>'
 
+#Função para logar
 def transformers(idPessoa, senhaPessoa):
     return Client(
 		idPessoa,
@@ -18,47 +19,48 @@ def transformers(idPessoa, senhaPessoa):
 		"https://sandbox.belvo.co"
 	)
 
+#Aba de login
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     resp = make_response(render_template('login.html'))
     if request.method=='GET':
-        return resp#render_template('login.html')
+        return resp    #Entra na página de login
     else:
-        return msgError
+        return msgError#Mensagem de erro se for POST
 
+#Aba de dados, onde a pessoa vai ver os principais dados dela
 @app.route('/dados', methods=['POST', 'GET'])
 def dados():
-    if request.method=='GET':
-        return render_template('index.html')
+    if request.method=='GET':               #Caso não esteja recebendo informação
+        return render_template('index.html')#Retorna página dos dados
     else:
         ###Pegando os dados do formulário###
-        nome = request.form['idPessoa']           #id
-        senha = request.form['senha']             #senha
-        client = bibliotecas.chamar(nome, senha)  #Cazendo o client
+        nome = request.form['idPessoa']             #id
+        senha = request.form['senha']               #senha
+        client = bibliotecas.chamar(nome, senha)    #Cazendo o client
         ###instituições###
-        instituicoes = bibliotecas.ver_instituicoes(client)
-        tamanhoInst = len(instituicoes)
+        instituicoes = bibliotecas.ver_instituicoes(client)#Instituições
+        tamanhoInst = len(instituicoes)                    #Quantas instituições tem
 
         ####DADOS PARA CRIAR OS COOKIES####
         
         #TRANSAÇÕES
-        transacoes  = bibliotecas.transacoes(client)
-        tamanhoTran = len(transacoes)
+        transacoes  = bibliotecas.transacoes(client)#Puxando as transações
+        tamanhoTran = len(transacoes)               #Quantas transações tem
         
         #LINK
-        verLink = bibliotecas.ver_link(client)
-        tamanhoVerLink = len(verLink)
+        verLink = bibliotecas.ver_link(client)      #Puxando os links e informações
+        tamanhoVerLink = len(verLink)               #Quandos links tem
         
         #CONTAS
-        contas = bibliotecas.retornaContas(client)#Contas que tem la
-
-        tamanhoContas = len(contas)               #Quantas contas tem
+        contas = bibliotecas.retornaContas(client)  #Contas que tem la
+        tamanhoContas = len(contas)                 #Quantas contas tem
 
         ###Fazendo os cookies###
         resp = make_response(render_template('index.html',
-                                            nome=contas,
-                                            tamanho=tamanhoContas,
-                                            instituicoes = instituicoes,
+                                            nome=contas,                     #Contas que tem
+                                            tamanho=tamanhoContas,           #Tamanho da conta
+                                            instituicoes = instituicoes,     #Instituições
                                             numero_instituicoes=tamanhoInst))#Site a ser retornado
         
         resp.set_cookie('idPessoa', json.dumps(nome))    #id
@@ -83,6 +85,7 @@ def dados():
 
         return resp
 
+#Aba de rota, direcionamento
 @app.route('/rota', methods=['POST', 'GET'])
 def rota():
     cookie1 = request.cookies.get('idPessoa')
@@ -90,41 +93,44 @@ def rota():
     
     return f"{json.loads(cookie1)}, {json.loads(cookie2)}"
 
-
+#Aba de links
 @app.route("/link",methods=["POST", "GET"])
 def link():
     if request.method == "GET":
         ####instituições e link e cadastro
         ##Instituições
-        tamanhoInst = int(request.cookies.get(f'lenInst'))
-        instituicoes = [json.loads(request.cookies.get(f'isnt{instituicao}')) for instituicao in range(tamanhoInst)]#request.cookies.get('')
+        tamanhoInst  = int(request.cookies.get(f'lenInst'))#Pega quantas instituições tem do cookie
+        instituicoes = [json.loads(request.cookies.get(f'isnt{instituicao}')) for instituicao in range(tamanhoInst)]#Instituições sendo adiciondas
         
         ##Link
-        tamanhoVerLink = int(request.cookies.get('lenVerLink'))
-        links = [json.loads(request.cookies.get(f'verLink{link}')) for link in range(tamanhoVerLink)]
+        tamanhoVerLink = int(request.cookies.get('lenVerLink'))#Quantos links tem, sendo puxado pelos cookies
+        links = [json.loads(request.cookies.get(f'verLink{link}')) for link in range(tamanhoVerLink)]#Adicionando os cookies na variável
         ##Cadastro informações
 
-        nome = request.cookies.get('idPessoa')
-        senha = request.cookies.get('senhaPessoa')
+        nome  = request.cookies.get('idPessoa')   #ID da pessoa
+        senha = request.cookies.get('senhaPessoa')#Senha da pessoa
+
+        ##Passando as informações##
 
         return render_template("link.html",
-            id=nome,
-            senha=senha,
-            links = links,
-            instituicoes=instituicoes,
-            numero_instituicoes = tamanhoInst,
-            numero_links = tamanhoVerLink)
+            id=nome,                          #Nome
+            senha=senha,                      #Senha
+            links = links,                    #Links
+            instituicoes=instituicoes,        #Instituições
+            numero_instituicoes = tamanhoInst,#Quantas instituições tem
+            numero_links = tamanhoVerLink)    #Quantos links tem
 
+#Aba de transações
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
-    tamanhoTransacoes = int(request.cookies.get('lenVerLink'))
-    transacoes = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]
+    tamanhoTransacoes = int(request.cookies.get('lenVerLink')) #Quantas transações houveram
+    transacoes = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]#Todas as transações
 
-    return render_template("transacoes.html",
-        numero_transacoes = tamanhoTransacoes,
-        transacoes = transacoes)
+    return render_template("transacoes.html", #Página
+        numero_transacoes = tamanhoTransacoes,#Quantas transações são
+        transacoes = transacoes)              #Dados das transações
 
-
+#Aba de contato
 @app.route('/contato')
 def contato():
     
