@@ -102,9 +102,8 @@ def link():
         ##Link
         tamanhoVerLink = int(request.cookies.get('lenVerLink'))
         links = [json.loads(request.cookies.get(f'verLink{link}')) for link in range(tamanhoVerLink)]
-        #return links[0]['id']
         ##Cadastro informações
-        #return instituicoes[0]
+
         nome = request.cookies.get('idPessoa')
         senha = request.cookies.get('senhaPessoa')
 
@@ -118,13 +117,11 @@ def link():
 
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
-    nome = request.cookies.get('idPessoa')
-    senha = request.cookies.get('senhaPessoa')
-    
-    client = transformers(nome, senha)
-    transacoes = [transacao for transacao in client.Transactions.list()]
+    tamanhoTransacoes = int(request.cookies.get('lenVerLink'))
+    transacoes = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]
+
     return render_template("transacoes.html",
-        numero_transacoes = len(transacoes),
+        numero_transacoes = tamanhoTransacoes,
         transacoes = transacoes)
 
 

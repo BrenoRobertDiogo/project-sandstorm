@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block css %}
     <link rel="stylesheet" href="templates/css/styleInf.css">
+    <link rel="stylesheet" type="text/css" href="templates/css/header.css">
     <title>{% block title %}Algumas informações{% endblock %}</title>
     {% endblock %}
 </head>
 <body>
     <header>
         <div class="logo">
-            <h2 id="h2-config"><span id="vermelho"> Be</span>lvo</h2>
+            <a href="http://127.0.0.1:5000/dados" id="linkPrincipal">
+                <span id="vermelho"> Be</span>lvo
+            </a>
         </div>
         <div class="links-cabecalho">
             <a href="http://127.0.0.1:5000/transacoes" class="links">Transações</a>
@@ -19,8 +22,6 @@
             <a href="http://127.0.0.1:5000/rota" class="links">Bancos</a>
             <a href="http://127.0.0.1:5000/contato" class="links">Contato</a>
         </div>
-
-
     </header>
     <div id="suasContas"><h1 >Suas contas: </h1></div>
     {% if nome != [] %}
@@ -30,7 +31,7 @@
         <section>
             {% for y in range(numero_instituicoes) %}
                 {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
-                    <img src="{{instituicoes[y]["logo"]}}" alt="" width="300px" height="200px"> 
+                    <img src="{{instituicoes[y]["logo"]}}" class="logo-banco">
                 {% endif %}
             {% endfor %}
             
