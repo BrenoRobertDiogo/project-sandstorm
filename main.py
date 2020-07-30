@@ -121,6 +121,10 @@ def link():
 #Aba de transações
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
+     
+    nome  = request.cookies.get('idPessoa')   #ID da pessoa
+    senha = request.cookies.get('senhaPessoa')#Senha da pessoa
+
     tamanhoTransacoes = int(request.cookies.get('lenVerLink')) #Quantas transações houveram
     transacoes  = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]#Todas as transações
     idPessoa    = json.loads(request.cookies.get('idPessoa'))
