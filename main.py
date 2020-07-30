@@ -78,7 +78,7 @@ def dados():
         resp.set_cookie('lenConta', json.dumps(tamanhoContas))
 
         ###############RETORNAR AS TRANSAÇÕES##########
-        [resp.set_cookie(f'trans{x}', json.dumps(str(transacoes[x]))) for x in range(tamanhoTran)]
+        [resp.set_cookie(f'trans{x}', json.dumps(transacoes[x])) for x in range(tamanhoTran)]
         resp.set_cookie('lenTrans', json.dumps(tamanhoTran))
 
         return resp
@@ -122,11 +122,17 @@ def link():
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
     tamanhoTransacoes = int(request.cookies.get('lenVerLink')) #Quantas transações houveram
-    transacoes = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]#Todas as transações
+    transacoes  = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]#Todas as transações
+    idPessoa    = json.loads(request.cookies.get('idPessoa'))
+    senhaPessoa = json.loads(request.cookies.get('senhaPessoa'))
 
+    #return transacoes[0]
     return render_template("transacoes.html", #Página
         numero_transacoes = tamanhoTransacoes,#Quantas transações são
-        transacoes = transacoes)              #Dados das transações
+        transacoes = transacoes,              #Dados das transações
+        id         = idPessoa,                #Nome de ID
+        senha      = senhaPessoa              #Senha da pessoa
+        )
 
 #Aba de contato
 @app.route('/contato')
