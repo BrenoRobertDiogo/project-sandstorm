@@ -121,12 +121,19 @@ def link():
 #Aba de transações
 @app.route("/transacoes",methods=["POST", "GET"])
 def transacoes():
+     
+    nome  = request.cookies.get('idPessoa')   #ID da pessoa
+    senha = request.cookies.get('senhaPessoa')#Senha da pessoa
+
     tamanhoTransacoes = int(request.cookies.get('lenVerLink')) #Quantas transações houveram
     transacoes = [json.loads(request.cookies.get(f'trans{transacao}')) for transacao in range(tamanhoTransacoes)]#Todas as transações
 
     return render_template("transacoes.html", #Página
         numero_transacoes = tamanhoTransacoes,#Quantas transações são
-        transacoes = transacoes)              #Dados das transações
+        transacoes = transacoes,#Dados das transações
+        id=nome,#Nome
+        senha=senha #Senha 
+        )             
 
 #Aba de contato
 @app.route('/contato')
