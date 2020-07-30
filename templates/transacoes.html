@@ -2,29 +2,50 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	    <!-- Bootstrap CSS -->
+	    
+
 		<title> Belvo - Transasações</title>
 		
 		{% block css %}
+			<link rel="stylesheet" href="css/bootstrap.min.css">
 			<link rel="stylesheet" type="text/css" href="templates/css/principal.css" />
         {% endblock %}
 
 	</head>
 
-	<body>
-		<header>
-	        <div class="logo">
-            <a href="http://127.0.0.1:5000/dados" id="linkPrincipal">
-                <span id="vermelho"> Be</span>lvo
-            </a>
-        </div>
-	        <div class="links-cabecalho">
-				<a href="http://127.0.0.1:5000/trasacoes" class="links" style="color: black; background-color: rgba(255, 255, 255, 0.9);">Transações</a>
-				<a href="http://127.0.0.1:5000/link" class="links">Links / Instituições</a>
-				<a href="#" class="links">Bancos</a>
-				<a href="http://127.0.0.1:5000/contato" class="links">Contato</a>
-	        </div>
+	<body style="width: 100%; height: 100%;">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+            <!--LOGO-->
+            <a href="http://127.0.0.1:5000/dados" class="navbar-brand" style="font-size: 30px; "><span id="vermelho"> Be</span>lvo</a>
+            
+            <!--HAMBURGER-->
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-target">
+                <span class="navbar-toggler-icon" ></span>
+            </button>
+            
+            <!--LINKS-->
+            <div class="collapse navbar-collapse" id="nav-target">
+                <ul class="navbar-nav ml-auto" style="">
+                    <li class="nav-item">
+                        <a href="http://127.0.0.1:5000/transacoes" class="nav-link active">Transações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://127.0.0.1:5000/link" class="nav-link">Instituições</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://127.0.0.1:5000/rota" class="nav-link">Bancos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://127.0.0.1:5000/contato" class="nav-link">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-		</header>
 		<h1 class="centralizar">Login Belvo</h1>
         
         <div class="borda">
@@ -38,12 +59,12 @@
 		{% if transacoes != [] %}
 			{% for x in range(numero_transacoes) %}
 				<div class="borda">
-						<p class="negrito"> Banco da Transação >> {{transacoes[x]["account"]["institution"]["name"]}}</p>
-						<p class="negrito"> Tipo de Transação >> {{transacoes[x]["account"]["type"]}}</p>
-						<p class="negrito"> Saldo >> {{transacoes[x]["account"]["balance"]["current"]}}</p>
-						<p class="negrito"> Saldo Disponivel >> {{transacoes[x]["account"]["balance"]["available"]}}</p>
-						<p class="negrito"> Montante da Transação >> {{transacoes[x]["account"]["amount"]}}</p>
-						<p class="negrito"> Descrição da Transação >> {{transacoes[x]["account"]["description"]}}</p>
+					<p class="negrito"> Banco da Transação >> {{transacoes[x]["account"]["institution"]["name"]}}</p>
+					<p class="negrito"> Tipo de Transação >> {{transacoes[x]["account"]["type"]}}</p>
+					<p class="negrito"> Saldo >> {{transacoes[x]["account"]["balance"]["current"]}}</p>
+					<p class="negrito"> Saldo Disponivel >> {{transacoes[x]["account"]["balance"]["available"]}}</p>
+					<p class="negrito"> Montante da Transação >> {{transacoes[x]["account"]["amount"]}}</p>
+					<p class="negrito"> Descrição da Transação >> {{transacoes[x]["account"]["description"]}}</p>
 				</div><br><br>
 			{% endfor %}
 		

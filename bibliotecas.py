@@ -10,9 +10,7 @@ import json#Json para manipulações de arquivos
 
 #Realiza o Login na API da belvo,e irá servir de parametro para as deais funções 
 def chamar(nome, senha):
-	#with open(diretorio, 'r') as arquivo:
-	#	mDados = json.load(arquivo)
-
+	
 	client = Client(
 		nome,#mDados['my-secret-key-id'], 
 		senha,#mDados['my-secret-key'], 
