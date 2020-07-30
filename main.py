@@ -61,7 +61,7 @@ def dados():
                                             instituicoes = instituicoes,     #Instituições
                                             numero_instituicoes=tamanhoInst))#Site a ser retornado
         
-        resp.set_cookie('idPessoa', json.dumps(nome))    #id
+        resp.set_cookie('idPessoa', json.dumps(nome))    #Id
         resp.set_cookie('senhaPessoa', json.dumps(senha))#senha
         """#######################COOKIES###############"""
         
