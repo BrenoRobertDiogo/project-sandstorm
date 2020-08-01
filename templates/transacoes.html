@@ -55,7 +55,7 @@
             
         </div><br><br>
 		<h1>Transasações</h1>
-		{% if transacoes != [] %}
+		{% if transacoes != [] or transacoes!= '' %}
 			{% for x in range(numero_transacoes) %}
 				<div class="borda">
 					<p class="negrito"> Banco da Transação >> {{transacoes[x]["account"]["institution"]["name"]}}</p>
