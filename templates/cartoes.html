@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+
+    <style type="text/css">
+      .vermelho{
+        color: red;
+      }
+      .card_img{
+        width: 300px;
+        background-color: #91c5f2;
+        border-radius: 45%;
+      }
+      
+      td{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+      }
+    </style>
+
+    <title>Modelo Base</title>
+  </head>
+
+  <body style="width: 100%; height: 100%; background: #f6f6ee">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <!--LOGO-->
+        <a href="" class="navbar-brand active" style="font-size: 30px; "><span class="vermelho"> Be</span>lvo</a>
+        
+        <!--HAMBURGER-->
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-target">
+            <span class="navbar-toggler-icon" ></span>
+        </button>
+        
+        <!--LINKS-->
+        <div class="collapse navbar-collapse" id="nav-target">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5000/transacoes" class="nav-link">Transações</a>
+                </li>
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5000/link" class="nav-link">Instituições</a>
+                </li>
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5000/rota" class="nav-link">Bancos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5000/contato" class="nav-link">Contato</a>
+                </li>
+            </ul>
+    </nav>
+    <div class="container-fluid" style="margin-top: 100px; margin-left: 0;">
+      <div class="row" id="info_cartao">
+        <!-- Java Script Fazendo a Magica -->
+      </div>
+    </div>
+            
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+
+      atualizaCartoes()
+
+      function atualizaCartoes(){
+        $.ajax({
+          url: "http://127.0.0.1:5000/cartoes",
+          type: "GET",
+          dataType: "json",
+          contentType: "application/json",
+          beforeSend: function(){
+              console.log("Obtendo Informações!")
+          },
+          success: function(data) { 
+              console.log(data)
+              var aux = ""
+              data.forEach(element => {
+                  aux += getBaseCartao( element.cor, element.logo, element.banco, element.categoria, parseFloat(element.saldo).toFixed(2), element.site )
+              });
+              $( "#info_cartao" ).html( aux );
+          },
+          error: function( data ){
+              console.log( "Erro : " + data )
+          }
+        })
+      }
+
+      function getBaseCartao(color, logo, banco, categoria, saldo, site){
+        aux = ""
+        aux += '<div class="col-md-6 mt-10 col-lg-4" style="min-width: 410px">'
+        aux += `<div class="card shadow mb-5 bg-black rounded" style="background-color: ${color};" >`
+        aux += '<div class="card-body">'
+        aux += `<h5 class="card-title"><img class="card_img" src="${logo}"></h5>`
+        aux += '<p class="card-text">'
+        aux += '<table class="">'
+        aux += '<tbody>'
+        aux += '<tr>'
+        aux += '<th scope="row">Banco :</th>'
+        aux += `<td>${banco}</td>`
+        aux += '</tr>'
+        aux += '<tr>'
+        aux += '<th scope="row">Categoria :</th>'
+        aux += `<td>${categoria}</td>`
+        aux += '</tr>'
+        aux += '<tr>'
+        aux += '<th scope="row">Saldo :</th>'
+        aux += `<td>${saldo}$</td>`
+        aux += '</tr>'
+        aux += '<tr>'
+        aux += '<th scope="row">Site :</th>'
+        aux += `<td><a class='btn' href="${site}">Acessar Pagina</a></td>`
+        aux += '</tr>'
+        aux += '</tbody>'
+        aux += '</table>'
+        aux += '</p> '
+        aux += '</div>'
+        aux += '</div>'
+        aux += '</div>'
+        return aux
+      }
+
+
+
+    </script>
+
+  </body>
+</html>
