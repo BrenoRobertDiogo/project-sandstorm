@@ -1,24 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
+<head>
+    {% block meta %}
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    {% endblock %}
+    {% block css %}
     
-
-    <style type="text/css">
-      #vermelho{
-        color: red;
-      }
-    </style>
-
-    <title>Modelo Base</title>
-  </head>
-
-  <body style="width: 100%; height: 100%; background: #f6f6ee">
+    <link rel="stylesheet" type="text/css" href="templates/css/principal.css">
+    <link rel="stylesheet" href="templates/css/styleInf.css">
+    <link rel="stylesheet" href="templates/css/bootstrap.min.css">
+    
+    {% endblock %}
+    {% block title %}<title>Algumas informações</title>{% endblock %}
+    
+</head>
+<body style="width: 100%; height: 100%;">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <!--LOGO-->
         <a href="http://127.0.0.1:5000/dados" class="navbar-brand active" style="font-size: 30px; "><span id="vermelho"> Be</span>lvo</a>
@@ -45,161 +42,108 @@
                 </li>
             </ul>
     </nav>
-    <div class="container-fluid" style="margin-top: 100px; margin-left: 0;">
+
+    <div id="suasContas"><h1 >Suas contas: </h1></div>
+    
+        <div class="container-fluid" style="margin-top: 100px; margin-left: 0;">
           <div class="row">
-            <div class="col-md-6 mt-10 col-lg-4 col-sm-6" style="min-width: 410px">
+
+            <!--começa o for-->
+            {% if nome != [] %}
+
+            {% for x in range(tamanho) %}   
+
+            <div class="col-md-6 mt-10 col-lg-4 col-sm-6">
               <div class="card shadow mb-5 bg-black rounded">
                 <div class="card-body">
-                  <h5 class="card-title"><img src="https://source.unsplash.com/random/180x80"></h5>
+                <!--Pegando a imagem-->
+                    <h5 class="card-title">
+                    {% for y in range(numero_instituicoes) %}
+                        {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
+                            <img src="{{instituicoes[y]["logo"]}}" class="logo-banco img-fluid card-header b-3">
+                        {% endif %}
+                    {% endfor %}
+                  </h5>
+                  
                   <p class="card-text">
                     <table>
                        <tbody>
                         <tr>
-                          <th scope="row">Nome:</th>
-                          <td>Seu nome</td>
+                          <th scope="row">
+                            Banco: 
+                          </th>
+                          <td>{{nome[x]['institution']['name']}}</td>
                         </tr>
+                        
                         <tr>
-                          <th scope="row">Banco:</th>
-                          <td>banco</td>                   
+                          <th scope="row">
+                            Tipo de cartão: 
+                          </th>
+                          <td>{{nome[x]['category']}}</td>                   
                         </tr>
-                        <tr>
-                          <th scope="row">Saldo:</th>
-                          
-                          <td>Saldo disponivel</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Seu ID:</th>
-                          
-                          <td>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Crédito:</th>
-                          
-                          <td>Crédito disponivel</td>
-                        </tr>
+
                       </tbody>
                     </table>
-                  </p> 
-                </div>
-              </div>
-            </div>
+                  </p><!--CARD TEXT-->
+                </div><!--CARD BODY-->
+              </div><!--CARD-->
+            </div><!--COL-MD-6...-->
+        {% endfor %}
+        <!--FECHAMENTOS ROW E CONTAINER-->
+        </div><!--ROW-->
+        </div><!--CONTAINER-->
+        
+        
+        {% else %}
+        <section>
+        <p> <h1> Nenhuma Conta Encontrada </h1> </p>
+        </section><br>
+        {% endif %}
+
+
+
+
+
+
+
+
+
+    <!--{% if nome != [] %}
+
+        {% for x in range(tamanho) %}
+        
+        <section>
+            {% for y in range(numero_instituicoes) %}
+                {% if nome[x]["institution"]["name"] == instituicoes[y]["name"] %}
+                    <img src="{{instituicoes[y]["logo"]}}" class="logo-banco img-fluid card-header b-3">
+                {% endif %}
+            {% endfor %}
             
-            <div class="col-md-6 mt-10 col-lg-4" style="min-width: 410px">
-              <div class="card shadow mb-5 bg-black rounded">
-                <div class="card-body">
-                  <h5 class="card-title"><img src="https://source.unsplash.com/random/180x80"></h5>
-                  <p class="card-text">
-                    <table>
-                       <tbody>
-                        <tr>
-                          <th scope="row">Nome:</th>
-                          <td>Seu nome</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Banco:</th>
-                          <td>banco</td>                   
-                        </tr>
-                        <tr>
-                          <th scope="row">Saldo:</th>
-                          
-                          <td>Saldo disponivel</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Seu ID:</th>
-                          
-                          <td>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Crédito:</th>
-                          
-                          <td>Crédito disponivel</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </p> 
-                </div>
-              </div>
-            </div>
+            <p><strong>Banco:</strong> {{nome[x]['institution']['name']}}</p>
+            <p><strong>ID:</strong>{{nome[x]['id']}}</p>
+            
+            <p><strong>Tipo de cartão:</strong> {{nome[x]['category']}}</p>
+        </section><br>
+        {% endfor %}
+    {% else %}
+        <section>
+        <p> <h1> Nenhuma Conta Encontrada </h1> </p>
+        </section><br>
+    {% endif %}
+    
+    
+    <script type="text/javascript">{{comando}}</script>-->
 
-            <div class="col-md-6 mt-10 col-lg-4" style="min-width: 410px">
-              <div class="card shadow mb-5 bg-black rounded">
-                <div class="card-body">
-                  <h5 class="card-title"><img src="https://source.unsplash.com/random/180x80"></h5>
-                  <p class="card-text">
-                    <table>
-                       <tbody>
-                        <tr>
-                          <th scope="row">Nome:</th>
-                          <td>Seu nome</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Banco:</th>
-                          <td>banco</td>                   
-                        </tr>
-                        <tr>
-                          <th scope="row">Saldo:</th>
-                          
-                          <td>Saldo disponivel</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Seu ID:</th>
-                          
-                          <td>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Crédito:</th>
-                          
-                          <td>Crédito disponivel</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </p> 
-                </div>
-              </div>
-            </div>
 
-            <div class="col-md-6 mt-10 col-lg-4" style="min-width: 410px">
-              <div class="card shadow mb-5 bg-black rounded">
-                <div class="card-body">
-                  <h5 class="card-title"><img src="https://source.unsplash.com/random/180x80"></h5>
-                  <p class="card-text">
-                    <table>
-                       <tbody>
-                        <tr>
-                          <th scope="row">Nome:</th>
-                          <td>Seu nome</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Banco:</th>
-                          <td>banco</td>                   
-                        </tr>
-                        <tr>
-                          <th scope="row">Saldo:</th>
-                          
-                          <td>Saldo disponivel</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Seu ID:</th>
-                          
-                          <td>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Crédito:</th>
-                          
-                          <td>Crédito disponivel</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </p> 
-                </div>
-              </div>
-            </div>
-   
 
+
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    {% block script %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+    <script src="templates/js/bootstrap.min.js"></script>
+    {% endblock %}
+    </body>
 </html>
